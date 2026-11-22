@@ -1,0 +1,107 @@
+name: educ_student
+description: "Banaa's student app project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.45+45
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.9
+
+  educ_core:
+    path: ../educ_core
+
+  flutter_bloc: ^9.1.1
+  go_router: ^18.1.4
+  lottie: ^3.8.2
+  flutter_local_notifications: ^23.0.0
+  just_audio: ^0.10.6
+  workmanager: ^0.10.10
+  auto_size_text: ^3.0.0
+  flutter_screenutil: ^5.9.3
+  share_plus: ^13.3.1
+  custom_adaptive_scaffold: ^6.0.0
+  mailer: ^7.3.0
+  audioplayers: ^6.8.1
+  permission_handler: ^13.0.2
+  material_ui: ^1.11.0
+  intl: ^0.20.3
+  dio: ^5.11.1
+  path_provider: ^2.1.6
+  easy_localization: ^3.0.8
+  flutter_quill: ^11.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.1
+
+dependency_overrides:
+  web: ^1.0.0
+  shared_preferences_android: 2.4.1
+
+
+#flutter pub run flutter_launcher_icons:main
+#  flutter pub get
+#  dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  remove_alpha_ios: true
+  adaptive_icon_foreground: "assets/images/banaa_app_icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  background_color: "#FFFFFF"
+  image_path: "assets/images/banaa_app_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/banaa_app_icon.png"
+  windows:
+    generate: true
+    image_path: "assets/images/banaa_app_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+
+#dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/images/banaa_app_icon.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/translations/
+    - assets/images/
+    - assets/svgs/
+    - assets/lotties/
+    - assets/sounds/
+
+  fonts:
+    - family: Omnes
+      fonts:
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-HAIRLINE.ttf
+          weight: 100
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-THIN.ttf
+          weight: 200
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-EXTRA-LIGHT.ttf
+          weight: 300
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-LIGHT.ttf
+          weight: 400
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-REGULAR.ttf
+          weight: 500
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-MEDIUM.ttf
+          weight: 600
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-SEMI-BOLD.ttf
+          weight: 700
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-BOLD.ttf
+          weight: 800
+        - asset: assets/fonts/Omnes/OMNES-ARABIC-BLACK.ttf
+          weight: 900

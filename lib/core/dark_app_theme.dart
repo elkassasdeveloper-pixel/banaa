@@ -1,0 +1,125 @@
+import 'package:educ_student/core/app_theme.dart';
+import 'package:educ_student/core/brand_colors.dart';
+import 'package:educ_student/core/colors_theme_ext.dart';
+import 'package:material_ui/material_ui.dart';
+
+class DarkAppTheme extends AppTheme {
+  @override
+  ColorsThemeExt get colors => const ColorsThemeExt(
+        success: Color(0xFF5fdda7),
+        onSuccess: Color(0xFF003825),
+        successContainer: Color(0xFF005237),
+        onSuccessContainer: Color(0xFF7df9c2),
+        background: Color(0xFF07283E),
+        headline: BrandColors.primary3,
+        subHeadline: BrandColors.white,
+        bodyText: Color(0x99ffffff),
+        iconContainer: Color(0x14cbefff),
+        shapeContainer: BrandColors.primary2,
+        container: BrandColors.primary2,
+        bgShadow: Color(0xFF00426C),
+        outline: BrandColors.primary2,
+        linearBackground: (
+          start: Color(0xFF0E3650),
+          end: Color(0xFF07283E),
+        ),
+        linearLearnCardBackground: (
+          start: Color(0x3D77CD93),
+          end: Color(0x3300D2FF),
+        ),
+        appBarBackground: Color(0xFF0C324C),
+        appBarBorder: BrandColors.primary3,
+        appBarShadow: Color(0xFF97D0E9),
+        bottomNavBarBackground: Color(0xFF005680),
+      );
+
+  // V1
+
+  /*@override
+  ColorScheme get colorScheme => ColorScheme(
+        brightness: Brightness.dark,
+        primary: BrandColors.primary1,
+        onPrimary: const Color(0xFF003543),
+        primaryContainer: const Color(0xFF004E60),
+        onPrimaryContainer: const Color(0xFFB6EBFF),
+        secondary: BrandColors.secondary1,
+        onSecondary: const Color(0xFF3A3000),
+        secondaryContainer: const Color(0xFF544600),
+        onSecondaryContainer: const Color(0xFFFFE16D),
+        tertiary: BrandColors.secondary2,
+        onTertiary: const Color(0xFF3B1D71),
+        tertiaryContainer: const Color(0xFF523689),
+        onTertiaryContainer: const Color(0xFFEADDFF),
+        error: const Color(0xFFFFB4AB),
+        errorContainer: const Color(0xFF93000A),
+        onError: const Color(0xFF690005),
+        onErrorContainer: const Color(0xFFFFDAD6),
+        background: colors.background,
+        onBackground: const Color(0xFFA6EEFF),
+        surface: colors.container,
+        onSurface: const Color(0xFFA6EEFF),
+        surfaceVariant: const Color(0xFF40484C),
+        onSurfaceVariant: const Color(0xFFBFC8CC),
+        outline: const Color(0xFF8A9296),
+        onInverseSurface: const Color(0xFF001F25),
+        inverseSurface: const Color(0xFFA6EEFF),
+        inversePrimary: const Color(0xFF00677F),
+        shadow: const Color(0xFF000000),
+        surfaceTint: const Color(0xFF47D6FF),
+        outlineVariant: const Color(0xFF40484C),
+        scrim: const Color(0xFF000000),
+      );*/
+
+  // V2
+
+  @override
+  ColorScheme get colorScheme => const ColorScheme(
+        brightness: Brightness.dark,
+        primary: Color(0xffbcecff),
+        surfaceTint: Color(0xff47d6ff),
+        onPrimary: Color(0xff003543),
+        primaryContainer: Color(0xff00cbf7),
+        onPrimaryContainer: Color(0xff003340),
+        secondary: Color(0xff99f0b3),
+        onSecondary: Color(0xff00391c),
+        secondaryContainer: Color(0xff70c68c),
+        onSecondaryContainer: Color(0xff003017),
+        tertiary: Color(0xffd2bbff),
+        onTertiary: Color(0xff38255f),
+        tertiaryContainer: Color(0xff7e6aa8),
+        onTertiaryContainer: Color(0xffffffff),
+        error: Color(0xffffb3af),
+        onError: Color(0xff68000e),
+        errorContainer: Color(0xffce4445),
+        onErrorContainer: Color(0xffffffff),
+        surface: Color(0xff0e1417),
+        onSurface: Color(0xffdde3e7),
+        onSurfaceVariant: Color(0xffbbc9cf),
+        outline: Color(0xff859399),
+        outlineVariant: Color(0xff3c494e),
+        shadow: Color(0xff000000),
+        scrim: Color(0xff000000),
+        inverseSurface: Color(0xffdde3e7),
+        onInverseSurface: Color(0xff2b3134),
+        inversePrimary: Color(0xff00677f),
+        primaryFixed: Color(0xffb6ebff),
+        onPrimaryFixed: Color(0xff001f28),
+        primaryFixedDim: Color(0xff47d6ff),
+        onPrimaryFixedVariant: Color(0xff004e60),
+        secondaryFixed: Color(0xff9ef5b8),
+        onSecondaryFixed: Color(0xff00210e),
+        secondaryFixedDim: Color(0xff82d99e),
+        onSecondaryFixedVariant: Color(0xff00522c),
+        tertiaryFixed: Color(0xffeaddff),
+        onTertiaryFixed: Color(0xff230e48),
+        tertiaryFixedDim: Color(0xffd2bbff),
+        onTertiaryFixedVariant: Color(0xff4f3c77),
+        surfaceDim: Color(0xff0e1417),
+        surfaceBright: Color(0xff333a3d),
+        surfaceContainerLowest: Color(0xff090f12),
+        surfaceContainerLow: Color(0xff161d1f),
+        surfaceContainer: Color(0xff1a2123),
+        surfaceContainerHigh: Color(0xff242b2e),
+        surfaceContainerHighest: Color(0xff2f3639),
+      );
+}

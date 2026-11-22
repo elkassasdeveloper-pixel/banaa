@@ -1,0 +1,156 @@
+import 'dart:ui';
+
+import 'package:educ_core/educ_core.dart';
+import 'package:educ_core/utils/env.dart';
+import 'package:educ_core/utils/logger.dart';
+import 'package:educ_student/core/constants.dart';
+import 'package:educ_student/core/dark_app_theme.dart';
+import 'package:educ_student/core/go_router.dart';
+import 'package:educ_student/core/light_app_theme.dart';
+import 'package:educ_student/core/notifications_provider.dart';
+import 'package:educ_student/screens/auth/auth_cubit.dart';
+import 'package:educ_student/screens/auth/login_cubit.dart';
+import 'package:educ_student/screens/auth/sign_up_cubit.dart';
+import 'package:educ_student/screens/other/settings_cubit.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:workmanager/workmanager.dart';
+
+const myTaskKey = "show_notification_task";
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("📩 رسالة جديدة في الباكجراوند: ${message.notification?.title}");
+
+@pragma('vm:entry-point')
+Future<void> callbackDispatcher() async {
+  Workmanager().executeTask((task, inputData) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await NotificationService().initNotification();
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    if (task == myTaskKey) {
+      debugPrint("🔄 [WorkManager] Task started at ${DateTime.now()}");
+
+      final now = DateTime.now();
+      final formattedDate =
+          "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+      final formattedTime =
+          "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
+
+      NotificationService().showNotification(
+        title: "⏰ تذكير",
+        body: "مر وقت! تعال وكمّل رحلتك التعليمية 💡\n📅 $formattedDate ⏰ $formattedTime",
+      );
+
+      debugPrint("✅ [WorkManager] Notification sent at $formattedDate $formattedTime");
+    }
+
+    return Future.value(true);
+  });
+}
+
+Future<void> main() async {
+  // usePathUrlStrategy();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeAppDependencies(environment: kDebugMode ? DebugEnv() : ProductionEnv());
+
+  // await NotificationsProvider().initialize();
+  await NotificationService().initNotification();
+  await Workmanager().initialize(
+    callbackDispatcher,
+    isInDebugMode: true, // عشان التجربة
+  );
+  // تسجل تاسك كل 15 دقيقة
+  Workmanager().registerPeriodicTask(
+    "uniqueName", // ID
+    myTaskKey, // task name
+    frequency: Duration(minutes: 15),
+    initialDelay: Duration(minutes: 3),
+  );
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
+
+  final deviceLocale = PlatformDispatcher.instance.locale;
+  Logger.data("Device Locale", deviceLocale);
+  // final appLifecycleHandler = AppLifecycleHandler();
+  // WidgetsBinding.instance.addObserver(appLifecycleHandler);
+  runApp(
+    EasyLocalization(
+      useOnlyLangCode: true,
+      path: "assets/translations",
+      supportedLocales: Consts.supportedLocales,
+      // startLocale: Locale('en'),
+      startLocale: Locale('ar'),
+      saveLocale: false,
+
+      // fallbackLocale: const Locale('en'),
+      fallbackLocale: const Locale('ar'),
+      child: const MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  static final List<BlocProvider> _providers = [
+    BlocProvider<AuthCubit>(create: (context) => AuthCubit(), lazy: false),
+    BlocProvider<SettingsCubit>(create: (context) => SettingsCubit(), lazy: false),
+    BlocProvider<LoginCubit>(create: (context) => LoginCubit(), lazy: true),
+    BlocProvider<SignUpCubit>(create: (context) => SignUpCubit(), lazy: true),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: _providers,
+      child: ScreenUtilInit(
+        designSize: Consts.designSize,
+        child: BlocConsumer<SettingsCubit, SettingsState>(
+          listener: (context, state) {
+            final cubit = context.read<SettingsCubit>();
+            if (state is SettingsLoaded) {
+              cubit.applyPreferences(context);
+            }
+          },
+          builder: (context, state) {
+            final cubit = context.read<SettingsCubit>();
+            return MaterialApp.router(
+              routerConfig: AppRouter.goRouter,
+              title: Strings.appNameAr,
+              locale: context.locale,
+              supportedLocales: context.supportedLocales,
+              localizationsDelegates: [
+                FlutterQuillLocalizations.delegate,
+                ...context.localizationDelegates,
+              ],
+              debugShowCheckedModeBanner: false,
+              theme: LightAppTheme().themeData,
+              darkTheme: DarkAppTheme().themeData,
+              themeMode: cubit.themeMode,
+              builder: (context, widget) {
+                return ScrollConfiguration(
+                  behavior: const MaterialScrollBehavior().copyWith(
+                    dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+                    physics: const ClampingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  ),
+                  child: widget ?? const SizedBox(),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
