@@ -55,7 +55,7 @@ class TopicDetailsScreen extends StatelessWidget {
             context.showSuccessSnackBar("topic_added_to_bookmarks".tr());
             syncTopicWithLearnScreen(context, cubit);
           } else if (state is TopicRemoveBookmarkSuccess) {
-            context.showSuccessSnackBar("topic_removed_from_bookmarks".tr());
+            context.showNormalSnackBar("topic_removed_from_bookmarks".tr());
             syncTopicWithLearnScreen(context, cubit);
           }
         },
@@ -117,7 +117,7 @@ class TopicDetailsScreen extends StatelessWidget {
                         child: SingleChildScrollView(
                           padding: const EdgeInsets.only(
                             top: 16.0,
-                            bottom: 64,
+                            bottom: 120.0,
                             left: 16.0,
                             right: 16.0,
                           ),
@@ -162,13 +162,11 @@ class TopicDetailsScreen extends StatelessWidget {
   Widget _buildFloatingQuizButton(BuildContext context, bool isButtonVisible, int? quizPoints) {
     return ResponsiveLayout(
       alignment: Alignment.bottomCenter,
-      child: AnimatedContainer(
-        constraints: BoxConstraints(
-          minHeight: isButtonVisible ? _floatingButtonHeight : 0,
+      child: Container(
+        constraints: const BoxConstraints(
+          minHeight: _floatingButtonHeight,
           maxHeight: _floatingButtonHeight * 1.2,
         ),
-        duration: const Duration(milliseconds: 300),
-        height: isButtonVisible ? null : 0,
         padding: const EdgeInsets.all(16),
         decoration: ShapeDecoration(
           color: context.colors.container,
@@ -251,24 +249,10 @@ class TopicDetailsScreen extends StatelessWidget {
   Widget _buildActionsButtonBar(BuildContext context, int? quizPoints) {
     return OverflowBar(
       alignment: MainAxisAlignment.center,
-
-      // buttonPadding: const EdgeInsets.all(12),
-      // overflowButtonSpacing: 8.0,
-      spacing: 8.0, // spacing between children
-      overflowSpacing: 8.0, // spacing when items overflow onto a new line
+      spacing: 8.0,
+      overflowSpacing: 8.0,
       children: [
         _buildBookmarkButton(context),
-        FilledButton(
-          onPressed: () => _goToQuizScreen(context),
-          style: FilledButton.styleFrom(
-            backgroundColor: BrandColors.primary1,
-            foregroundColor: context.colorScheme.onInverseSurface,
-          ),
-          child: Text(
-            "start_topic_quiz".tr(args: [(quizPoints ?? 0).toString()]),
-            style: Omnes.w700.getStyle(fontSize: 16),
-          ),
-        ),
       ],
     );
   }

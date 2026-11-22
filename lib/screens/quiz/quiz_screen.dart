@@ -386,7 +386,7 @@ class QuizScreen<C extends IQuizCubit> extends StatelessWidget {
       Logger.Red("Failed to show assistant bubble on correct answer: $e");
     }
     if (result == false && !cubit.isAdvanced && totalAttempts > 0) {
-      context.read<AuthCubit>().decrementAccountAttempts();
+      context.read<AuthCubit>().decrementAccountAttempts(context: context);
       Logger.Green("accountAttempts: $totalAttempts");
     }
   }

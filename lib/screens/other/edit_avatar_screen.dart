@@ -7,7 +7,6 @@ import 'package:educ_student/core/brand_colors.dart';
 import 'package:educ_student/screens/other/edit_avatar_cubit.dart';
 import 'package:educ_student/widgets/avatar_choice.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 

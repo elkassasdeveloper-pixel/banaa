@@ -4,8 +4,8 @@ import 'package:educ_core/services/dio_helper.dart';
 import 'package:educ_core/utils/helpers.dart';
 import 'package:educ_core/utils/result.dart';
 import 'package:educ_student/core/functions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 const assistantShowDuration = Duration(milliseconds: 800);
 const bubbleTransitionDuration = Duration(milliseconds: 500);

@@ -12,11 +12,13 @@ import 'package:educ_core/utils/extensions.dart';
 import 'package:educ_core/utils/logger.dart';
 import 'package:educ_core/utils/text_styles.dart';
 import 'package:educ_core/widgets/smooth_corner/smooth_rectangle_border.dart';
+import 'package:educ_student/core/assets.dart';
 import 'package:educ_student/core/routes.dart';
 import 'package:educ_student/data_cubit.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class AuthCubit extends DataCubit<AuthState> {
   AuthCubit() : super(Unauthenticated());
@@ -74,6 +76,7 @@ class AuthCubit extends DataCubit<AuthState> {
       await fetchUser();
     } catch (e) {
       Logger.Red("Failed to increment attempts: $e", name: "AuthCubit");
+      await fetchUser();
     } finally {
       _refilling = false;
     }
@@ -95,16 +98,64 @@ class AuthCubit extends DataCubit<AuthState> {
     emit(Authenticated(user: user));
   }
 
-  Future<void> decrementAccountAttempts() async {
+  Future<void> decrementAccountAttempts({BuildContext? context}) async {
     final state = this.state;
     Logger.Black((state is Authenticated).toString());
     if (state is Authenticated) {
       final user = state.user;
+      final oldAttempts = user.totalAttempts;
       user.totalAttempts = math.max(0, user.totalAttempts - 1);
       emit(Authenticated(user: user));
       await _accountRepository.decrementAccountAttempts();
       fetchUser();
+
+      if (context != null && context.mounted && oldAttempts > user.totalAttempts) {
+        final hasShown = CacheHelper.getHasShownHeartLossGuidance();
+        if (!hasShown) {
+          await CacheHelper.setHasShownHeartLossGuidance(true);
+        if(context.mounted)  _showFirstHeartLossGuidance(context);
+        }
+      }
     }
+  }
+
+  void _showFirstHeartLossGuidance(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => AlertDialog(
+        backgroundColor: context.colorScheme.surfaceContainerLow,
+        shape: SmoothRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            LottieBuilder.asset(
+              Lotties.brokenHeart,
+              height: 100,
+              repeat: false,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              "first_heart_lost_title".tr(),
+              textAlign: TextAlign.center,
+              style: Omnes.w700.getStyle(fontSize: 18, color: context.colorScheme.primary),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "first_heart_lost_desc".tr(),
+              textAlign: TextAlign.center,
+              style: Omnes.w400.getStyle(fontSize: 14, color: context.colorScheme.onSurface),
+            ),
+          ],
+        ),
+        actions: [
+          FilledButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("ok".tr(), style: Omnes.w500.getStyle(fontSize: 14)),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> signOut(BuildContext context,{bool showDialog = true}) async {

@@ -451,5 +451,14 @@
   "edit_profile_picture": "Edit profile picture",
   "assistant": "Assistant",
   "view_notification_history": "View notification history",
-  "admin": "Admin"
+  "admin": "Admin",
+  "first_heart_lost_title": "You lost a heart!",
+  "first_heart_lost_desc": "Hearts represent your available quiz attempts. Hearts regenerate automatically over time so you can keep learning.",
+  "streak_guidance_title": "Learning Streak",
+  "streak_guidance_desc": "Shows the consecutive days you have engaged in learning. Keep practicing daily to build your streak!",
+  "attempts_guidance_title": "Hearts & Attempts",
+  "attempts_guidance_desc": "Each heart represents one attempt to take a quiz. Hearts regenerate automatically over time.",
+  "streak_tooltip": "Streak: Learn daily. Tap for details",
+  "attempts_tooltip": "Hearts: Available quiz attempts. Tap for details",
+  "notifications_tooltip": "Reminders and updates"
 }

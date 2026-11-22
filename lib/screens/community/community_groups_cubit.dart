@@ -4,7 +4,6 @@ import 'package:educ_core/services/centrifugo/jwt_decoder.dart';
 import 'package:educ_core/services/dio_helper.dart';
 import 'package:educ_core/utils/result.dart';
 import 'package:educ_student/data_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:educ_core/services/centrifugo/conf.dart' as conf;
 

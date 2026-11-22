@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:material_ui/material_ui.dart';
 import 'package:educ_core/constants/strings.dart';
 import 'package:educ_core/data/models/post.dart';
 import 'package:educ_core/data/repositories/account_repository.dart';
@@ -10,7 +11,6 @@ import 'package:educ_core/utils/extensions.dart';
 import 'package:educ_core/utils/result.dart';
 import 'package:educ_student/core/routes.dart';
 import 'package:educ_student/screens/post/post_images_slider_mixin.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
